@@ -22,12 +22,3 @@
 
         
     }
-
-	auth.onAuthStateChanged(function(user) {
-		// if (user) {
-		// 	var email = user.email;
-		// 	window.location.replace('/login.html')
-		// } else {
-			
-		// }
-	})
