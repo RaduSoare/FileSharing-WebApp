@@ -25,65 +25,13 @@
             border: 2px solid black;
         }
     </style>
-    Image Name <input id="uploaded_img_name" type="text"> <br>
-    <img id="uploaded_img"> <label id="UpProgress"></label> <br>
+    Image Name <input id="namebox" type="text"> <br>
+    <img id="img"> <label id="UpProgress"></label> <br>
 
-    <button id="select">Select Image</button>
-    <button id="upload">Upload Image</button>
-    <button id="retrieve">Retrieve Image</button>
-
+    <button onclick="selectFile()" id="select">Select Image</button>
+    <button onclick="uploadFile()" id="upload">Upload Image</button>
+    <button onclick ="retrieveFile()" id="retrieve">Retrieve Image</button>
     <button onclick="signOut()" id="signOut"> Sign Out </button>
-
-    <script>
-        var files = [];
-        var reader;
-        document.getElementById("select").onclick = function(e) {
-
-            var input = document.createElement('input');
-            input.type = 'file';
-
-            input.onchange = e => {
-                files = e.target.files;
-                reader = new FileReader();
-                reader.onload = function() {
-                    document.getElementById("uploaded_img").src = reader.result;
-                }
-                reader.readAsDataURL(files[0]);
-            }
-            input.click();
-        }
-
-        document.getElementById("upload").onclick = function() {
-            imgName = document.getElementById("uploaded_img_name").value;
-            var uploadTask = storage.ref("users_content/" + imgName + ".png").put(files[0]);
-
-            uploadTask.on('state_changed', function(snapshot){
-                
-                progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                document.getElementById('UpProgress').innerHTML = 'Upload' + progress + "%";
-                
-            },
-
-            function(error) {
-                alert('error in saving the image');
-            },
-
-            function() {
-                uploadTask.snapshot.ref.getDownloadURL().then(function(url) {
-                    imgUrl = url;
-
-                    firebase.database().ref('content_files/'+imgName).set({
-                        Name:imgName,
-                        Link:imgUrl
-                    });
-                alert("Image added successfully");
-                }
-            );
-            
-        });
-    }
-
-    </script>
 
 </body>
 </html>
