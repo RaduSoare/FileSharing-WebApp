@@ -74,14 +74,43 @@
     #remove-namebox {
         color: black;
     }
+    /* DropDown button */
+    .dropdown-submenu {
+        position: relative;
+    }
+
+    .dropdown-submenu .dropdown-menu {
+        top: 0;
+        left: 100%;
+        margin-top: -1px;
+    }
+    #dropdown-category {
+        margin-bottom: 5px;
+    }
     </style>
+
+    <script>
+        $(document).ready(function(){
+            $('.dropdown-submenu a.test').on("click", function(e){
+                $(this).next('ul').toggle();
+                e.stopPropagation();
+                e.preventDefault();
+
+                if(!$(this).parents().hasClass('open')){
+                    $('ul').removeClass('open');    
+                }
+                 $(this).parent().addClass('open');
+                
+            });
+        });
+    </script>
 
 </head>
 <body class="w3-black">
     <div id="my-navbar"></div>
 
     <!-- Icon Bar (Sidebar - hidden on small screens) -->
-<nav  id="file-management-navbar" class="w3-sidebar w3-bar-block w3-small w3-hide-small w3-center">
+    <nav  id="file-management-navbar" class="w3-sidebar w3-bar-block w3-small w3-hide-small w3-center">
     
     <a onclick="showUploadSection()" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
       <i class="fa fa-plus w3-xxlarge"></i>
@@ -100,6 +129,31 @@
 <div id="select-file-form">
     Image Name <input id="namebox" type="text"> <br>
     <img id="img"> <label id="UpProgress"></label> <br>
+    <!-- DropDown category -->
+    <div id="dropdown-category">                                 
+        <div class="dropdown">
+          <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Alege Categorie
+          <span class="caret"></span></button>
+          <ul class="dropdown-menu">
+            <li class="dropdown-submenu">
+              <a class="test" tabindex="-1" href="#">AN 1<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a tabindex="-1" href="#">USO</a></li>
+                <li><a tabindex="-1" href="#">PC</a></li>
+                <li><a tabindex="-1" href="#">PL</a></li>
+              </ul>
+            </li>
+            <li class="dropdown-submenu">
+                <a class="test" tabindex="-1" href="#">AN 2<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a tabindex="-1" href="#">IOCLA</a></li>
+                  <li><a  tabindex="-1" href="#">POO</a></li>
+                  
+                </ul>
+              </li>
+          </ul>
+        </div>
+      </div>
 
     <button onclick="selectFile()" id="select-button">Select Image</button>
     <button onclick="uploadFile()" id="upload-button">Upload Image</button>
@@ -109,6 +163,8 @@
     Image Name <input id="remove-namebox" type="text"> <br>
     <button onclick="removeFile()" id="remove-button">Remove Image</button>
 </div>
+
+
   
   
   

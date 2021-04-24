@@ -5,6 +5,19 @@ $(document).ready(function(){
 });
 
 var files = [];
+let current_user;
+
+firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+      console.log("state = definitely signed in")
+      console.log(user.email);
+      current_user = user;
+
+    }
+    else {
+      console.log("state = definitely signed out")
+    }
+  })
 
 function selectFile() {
     
@@ -24,7 +37,8 @@ function selectFile() {
 // Pune in storage fisierul
 function uploadFile() {
     imgName = document.getElementById("namebox").value;
-    var uploadTask = storage.ref("users_content/" + imgName + ".png").put(files[0]);
+    
+    var uploadTask = storage.ref("users_content/" + current_user.email.split(".")[0] + "/" + imgName + ".png").put(files[0]);
 
     uploadTask.on('state_changed', 
         function(snapshot){
@@ -41,7 +55,7 @@ function uploadFile() {
             uploadTask.snapshot.ref.getDownloadURL().then(function(url) {
                 imgUrl = url;
 
-                firebase.database().ref('content_files/'+imgName).set({
+                firebase.database().ref('content_files/' + current_user.email.split(".")[0] + '/' +imgName).set({
                     Name:imgName,
                     Link:imgUrl
                 });

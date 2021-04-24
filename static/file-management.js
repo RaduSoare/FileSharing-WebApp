@@ -12,14 +12,6 @@ function showRemoveSection() {
     selectFileForm.style.visibility = "hidden";
     removeFileForm.style.visibility = "visible";
 
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
-        console.log("state = definitely signed in")
-        console.log(user.email);
-      }
-      else {
-        console.log("state = definitely signed out")
-      }
-    })
+    
 
 }
