@@ -26,5 +26,9 @@ app.get('/navbar', function(req, res) {
     res.sendFile(path.join(__dirname, '/navbar.html'));
 });
 
+app.get('/personal-content', function(req, res) {
+    res.sendFile(path.join(__dirname, '/personal-content.html'));
+});
+
 
 app.listen(3000);
