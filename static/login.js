@@ -16,9 +16,6 @@ function selectFile() {
     input.onchange = e => {
         files = e.target.files;
         reader = new FileReader();
-        reader.onload = function() {
-            document.getElementById("img").src = reader.result;
-        }
         reader.readAsDataURL(files[0]);
     }
     input.click();
@@ -51,6 +48,9 @@ function uploadFile() {
             alert("Image added successfully");
             }
         );
+        document.getElementById("namebox").value = "";
+        document.getElementById('UpProgress').innerHTML = "";
+
         
     });
 }
@@ -67,10 +67,19 @@ function retrieveFile() {
     });
 }
 
+function removeFile() {
+
+}
+
 function signOut() {
     
-    auth.signOut();
+   firebase.auth().signOut().then(() => {
+    // Sign-out successful.
     alert("Signed Out ");
 
     window.location.replace('/');
+    }).catch((error) => {
+    // An error happened.
+    });
+    
 }

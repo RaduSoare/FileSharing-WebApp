@@ -12,6 +12,22 @@
     
         <!-- Latest compiled JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-storage.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-database.js"></script>
+        <script src="static/fireBase.js"></script>
+        <script src="static/login.js"></script>
+        <script src="static/file-management.js"></script>
+
+        
+
     <title>File Management</title>
 
     <script>
@@ -20,9 +36,82 @@
         });
     </script>
 
+<style>
+    body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
+    .w3-row-padding img {margin-bottom: 12px}
+    /* Set the width of the sidebar to 120px */
+    .w3-sidebar {width: 120px;background: #222;}
+    /* Add a left margin to the "page content" that matches the width of the sidebar (120px) */
+    #main {margin-left: 120px}
+    /* Remove margins from "page content" on small screens */
+    @media only screen and (max-width: 600px) {#main {margin-left: 0}}
+
+    #file-management-navbar {
+        margin-top: -21px;
+    }
+
+    #remove-file-form {
+        margin-left: 300px;
+        visibility: hidden;
+    }
+
+    #select-file-form {
+        margin-left: 300px;
+        visibility: hidden;
+    }
+    #select-button {
+        color: black;
+    }
+    #upload-button {
+        color: black;
+    }
+    #remove-button {
+        color: black;
+    }
+    #namebox {
+        color: black;
+    }
+    #remove-namebox {
+        color: black;
+    }
+    </style>
+
 </head>
-<body>
+<body class="w3-black">
     <div id="my-navbar"></div>
 
+    <!-- Icon Bar (Sidebar - hidden on small screens) -->
+<nav  id="file-management-navbar" class="w3-sidebar w3-bar-block w3-small w3-hide-small w3-center">
+    
+    <a onclick="showUploadSection()" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
+      <i class="fa fa-plus w3-xxlarge"></i>
+      <p> Add file</p>
+    </a>
+    <a onclick="showRemoveSection()" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
+      <i class="fa fa-trash w3-xxlarge"></i>
+      <p>Remove file</p>
+    </a>
+    <a href="#" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
+      <i class="fa fa-list w3-xxlarge"></i>
+      <p>Show my files</p>
+    </a>
+  </nav>
+
+<div id="select-file-form">
+    Image Name <input id="namebox" type="text"> <br>
+    <img id="img"> <label id="UpProgress"></label> <br>
+
+    <button onclick="selectFile()" id="select-button">Select Image</button>
+    <button onclick="uploadFile()" id="upload-button">Upload Image</button>
+</div>
+
+<div id="remove-file-form">
+    Image Name <input id="remove-namebox" type="text"> <br>
+    <button onclick="removeFile()" id="remove-button">Remove Image</button>
+</div>
+  
+  
+  
+  
 </body>
 </html>
