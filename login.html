@@ -644,6 +644,11 @@ textarea, label {
 
     </style>
    
+   <script>
+      $(document).ready(function(){
+          $('#my-navbar').load("/navbar");
+      });
+  </script>
     
     
 </head>
@@ -651,20 +656,9 @@ textarea, label {
     
       
     <main class="site-wrapper">
-        <nav class="navbar navbar-inverse">
-            <div class="container-fluid">
-              <div class="navbar-header">
-                <a class="navbar-brand" href="#">FileSharing</a>
-              </div>
-              <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="#">My Files</a></li>
-              </ul>
-              <ul class="nav navbar-nav navbar-right">
-                <li><button class="btn btn-danger navbar-btn" onclick="signOut()" id="signOut"><span class="glyphicon glyphicon-user"></span> Sign Out</button></li>
-              </ul>
-            </div>
-          </nav>
+  
+  <div id="my-navbar"></div>
+
   <div class="pt-table desktop-768">
     <div class="pt-tablecell page-home relative" style="background-image: url(https://c4.wallpaperflare.com/wallpaper/356/292/33/music-rock-and-roll-vinyl-album-covers-wallpaper-preview.jpg);
     background-position: center;

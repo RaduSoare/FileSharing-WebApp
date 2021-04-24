@@ -1,3 +1,9 @@
+
+// Insert navbar
+$(document).ready(function(){
+    $('#my-navbar').load("/navbar");
+});
+
 var files = [];
 
 function selectFile() {
