@@ -23,66 +23,23 @@
         <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-storage.js"></script>
         <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-database.js"></script>
         <script src="static/fireBase.js"></script>
-        <script src="static/login.js"></script>
+        <script src="static/main.js"></script>
+
+        <link href="/file-management.css" rel="stylesheet" type="text/css">
         <script src="static/file-management.js"></script>
+        
+        
 
         
 
     <title>File Management</title>
 
+
     <script>
-        $(document).ready(function(){
+         $(document).ready(function(){
             $('#my-navbar').load("/navbar");
         });
-    </script>
 
-<style>
-    body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
-    .w3-row-padding img {margin-bottom: 12px}
-    /* Set the width of the sidebar to 120px */
-    .w3-sidebar {width: 120px;background: #222;}
-    /* Add a left margin to the "page content" that matches the width of the sidebar (120px) */
-    #main {margin-left: 120px}
-    /* Remove margins from "page content" on small screens */
-    @media only screen and (max-width: 600px) {#main {margin-left: 0}}
-
-    #file-management-navbar {
-        margin-top: -21px;
-    }
-
-    #remove-file-form {
-        margin-left: 300px;
-        visibility: hidden;
-    }
-
-    #select-file-form {
-        margin-left: 300px;
-        visibility: hidden;
-    }
-    #select-button {
-        color: black;
-    }
-    #upload-button {
-        color: black;
-    }
-    #remove-button {
-        color: black;
-    }
-    #namebox {
-        color: black;
-    }
-    #remove-namebox {
-        color: black;
-    }
-    /* DropDown button */
-    
-    .drop-down-button{
-        color: black;
-    }
-
-    </style>
-
-    <script>
         $(document).ready(function(){
             $('.dropdown-submenu a.test').on("click", function(e){
                 $(this).next('ul').toggle();

@@ -5,12 +5,13 @@ const app = express();
 
 app.use("/static", express.static('./static/'));
 
+app.use(express.static(__dirname + '/public'));
 
-app.get('/', function(req, res) {
+app.get('/main', function(req, res) {
     res.sendFile(path.join(__dirname, '/main.html'));
 });
 
-app.get('/login', function(req, res) {
+app.get('/', function(req, res) {
     res.sendFile(path.join(__dirname, '/login.html'));
 });
 

@@ -1,193 +1,121 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Main Page</title>
+
+    <title>LoginPage</title>
+
+   
+
     <meta name='viewport' content='width=device-width, initial-scale=1'>
 
     <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-database.js"></script>
     <script src="static/fireBase.js"></script>
+
+    
     <script src="static/main.js"></script>
-    <style>
-        $font-family: "Roboto";
-        $font-size: 14px;
-        $color-primary: #ABA194;
+    
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
-        body {
-            font-family: $font-family;
-            font-size: $font-size;
-            background-size: 200% 100% !important;
-            animation: move 10s ease infinite;
-            transform: translate3d(0, 0, 0);
-            background: linear-gradient(45deg, #7E7E7E 10%, #3D3D3D 90%);
-            height: 100vh
-        }
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-        .user {
-            width: 90%;
-            max-width: 340px;
-            margin: 10vh auto;
-        }
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-        .user__header {
-            text-align: center;
-            opacity: 0;
-            transform: translate3d(0, 500px, 0);
-            animation: arrive 500ms ease-in-out 0.7s forwards;
-        }
-
-        .user__title {
-            font-size: $font-size;
-            margin-bottom: -10px;
-            font-weight: 500;
-            color: white;
-        }
-
-        .form {
-            margin-top: 40px;
-            border-radius: 6px;
-            overflow: hidden;
-            opacity: 0;
-            transform: translate3d(0, 500px, 0);
-            animation: arrive 500ms ease-in-out 0.9s forwards;
-        }
-
-        .form--no {
-            animation: NO 1s ease-in-out;
-            opacity: 1;
-            transform: translate3d(0, 0, 0);
-        }
-
-        .form__input {
-            display: block;
-            width: 300px;
-            padding: 20px;
-            font-family: $font-family;
-            -webkit-appearance: none;
-            border: 0;
-            outline: 0;
-            transition: 0.3s;
-            
-            &:focus {
-                background: darken(#fff, 3%);
-            }
-        }
-
-        .btn {
-            border-radius: 6px;
-            overflow: hidden;
-            opacity: 0;
-            
-            animation: arrive 500ms ease-in-out 0.9s forwards;
-            
-            display: block;
-            width: 340px;
-            padding: 20px;
-            font-family: $font-family;
-            -webkit-appearance: none;
-            outline: 0;
-            border: 0;
-            color: white;
-            background: #ABA194;
-            transition: 0.3s;
-            
-            
-        }
-        .btn:hover {
-            background: darken(#3D3D3D, 30%);
-        }
-
-        @keyframes NO {
-        from, to {
-            -webkit-transform: translate3d(0, 0, 0);
-            transform: translate3d(0, 0, 0);
-        }
-
-        10%, 30%, 50%, 70%, 90% {
-            -webkit-transform: translate3d(-10px, 0, 0);
-            transform: translate3d(-10px, 0, 0);
-        }
-
-        20%, 40%, 60%, 80% {
-            -webkit-transform: translate3d(10px, 0, 0);
-            transform: translate3d(10px, 0, 0);
-        }
-        }
-
-        @keyframes arrive {
-            0% {
-                opacity: 0;
-                transform: translate3d(0, 50px, 0);
-            }
-            
-            100% {
-                opacity: 1;
-                transform: translate3d(0, 0, 0);
-            }
-        }
-
-        @keyframes move {
-            0% {
-                background-position: 0 0
-            }
-
-            50% {
-                background-position: 100% 0
-            }
-
-            100% {
-                background-position: 0 0
-            }
-        }
-    </style>
+    <link href="/main.css" rel="stylesheet" type="text/css">
+   
+   <script>
+      $(document).ready(function(){
+          $('#my-navbar').load("/navbar");
+      });
+  </script>
+    
     
 </head>
-
-
 <body>
-    <div class="user">
-        <div id="loginForm">
-            <div id="header"></div>
+    
+      
+    <main class="site-wrapper">
+  
+  <div id="my-navbar"></div>
 
-            <header class="user__header">
-                <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3219/logo.svg" alt="" />
-                <h1 class="user__title">Welcome!</h1>
-            </header>
-            <form class="form">
-                <div class="form__group">
-                    <input class="form__input" type="email" placeholder="email" id="email"/>
+  <div class="pt-table desktop-768">
+    <div class="pt-tablecell page-home relative" style="background-image: url(https://c4.wallpaperflare.com/wallpaper/356/292/33/music-rock-and-roll-vinyl-album-covers-wallpaper-preview.jpg);
+    background-position: center;
+    background-size: cover;">
+                    <div class="overlay"></div>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-offset-1 col-md-10 col-lg-offset-2 col-lg-8">
+                                <div class="page-title  home text-center">
+                                  <span class="heading-page"> Welcome to platform </span>
+                                    <p class="mt20">Poti alege sa cauti intre fisierele puse de creatori sau sa vizualizezi doar contentul pe care il urmaresti</p>
+                                </div>
+
+                                <div class="hexagon-menu clear">
+                                    <div class="hexagon-item">
+                                        <div class="hex-item">
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                        </div>
+                                        <div class="hex-item">
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                        </div>
+                                        <a target="_self" href="personal-content"  class="hex-content">
+                                            <span class="hex-content-inner">
+                                                <span class="title">Personal Content</span>
+                                            </span>
+                                            <svg viewBox="0 0 173.20508075688772 200" height="200" width="174" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M86.60254037844386 0L173.20508075688772 50L173.20508075688772 150L86.60254037844386 200L0 150L0 50Z" fill="#1e2530"></path></svg>
+                                        </a>
+                                    </div>
+                                    <div class="hexagon-item">
+                                        <div class="hex-item">
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                        </div>
+                                        <div class="hex-item">
+                                            <div></div>
+                                            <div></div>
+                                            <div></div>
+                                        </div>
+                                        <a href="categories" target="_self" class="hex-content">
+                                            <span class="hex-content-inner">
+                                                <span class="title">Choose category</span>
+                                            </span>
+                                            <svg viewBox="0 0 173.20508075688772 200" height="200" width="174" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M86.60254037844386 0L173.20508075688772 50L173.20508075688772 150L86.60254037844386 200L0 150L0 50Z" fill="#1e2530"></path></svg>
+                                        </a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            
-            
-                <div class="form__group">
-                    <input class="form__input" type="password" placeholder="password" id="password"/>
-                </div>
-            </form> 
-                <button class="btn" type="button" onclick="signUp()" id="signUp"> Sign Up </button>
-                <button class="btn" type="button" onclick="signIn()" id="signIn"> Sign In </button>
-            <!-- <button class="btn" type="button">Register</button> -->
-            
-        </div>
-    </div>
-    <!-- <h1>Login form</h1>
-    <div id="loginForm">
-        <div id="header"></div>
+            </div>
+  </main>
+    
+    
+    
+      
+  <!---  
+    Image Name <input id="namebox" type="text"> <br>
+    <img id="img"> <label id="UpProgress"></label> <br>
 
-        <input type="email" placeholder="email" id="email"/>
-        <input type="password" placeholder="password" id="password"/>
+    <button onclick="selectFile()" id="select">Select Image</button>
+    <button onclick="uploadFile()" id="upload">Upload Image</button>
+    <button onclick ="retrieveFile()" id="retrieve">Retrieve Image</button>
+    <button onclick="signOut()" id="signOut"> Sign Out </button>
+-->
 
-        <button onclick="signUp()" id="signUp"> Sign Up </button>
-        <button onclick="signIn()" id="signIn"> Sign In </button>
-    </div>
-     -->
 </body>
 </html>
