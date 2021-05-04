@@ -1,3 +1,4 @@
+
 function showUploadSection() {
     var selectFileForm = document.getElementById("select-file-form");
     var removeFileForm = document.getElementById("remove-file-form");
@@ -11,7 +12,4 @@ function showRemoveSection() {
     var removeFileForm = document.getElementById("remove-file-form");
     selectFileForm.style.visibility = "hidden";
     removeFileForm.style.visibility = "visible";
-
-    
-
 }

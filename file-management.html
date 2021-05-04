@@ -75,18 +75,11 @@
         color: black;
     }
     /* DropDown button */
-    .dropdown-submenu {
-        position: relative;
+    
+    .drop-down-button{
+        color: black;
     }
 
-    .dropdown-submenu .dropdown-menu {
-        top: 0;
-        left: 100%;
-        margin-top: -1px;
-    }
-    #dropdown-category {
-        margin-bottom: 5px;
-    }
     </style>
 
     <script>
@@ -95,11 +88,6 @@
                 $(this).next('ul').toggle();
                 e.stopPropagation();
                 e.preventDefault();
-
-                if(!$(this).parents().hasClass('open')){
-                    $('ul').removeClass('open');    
-                }
-                 $(this).parent().addClass('open');
                 
             });
         });
@@ -130,30 +118,15 @@
     Image Name <input id="namebox" type="text"> <br>
     <img id="img"> <label id="UpProgress"></label> <br>
     <!-- DropDown category -->
-    <div id="dropdown-category">                                 
-        <div class="dropdown">
-          <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Alege Categorie
-          <span class="caret"></span></button>
-          <ul class="dropdown-menu">
-            <li class="dropdown-submenu">
-              <a class="test" tabindex="-1" href="#">AN 1<span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a tabindex="-1" href="#">USO</a></li>
-                <li><a tabindex="-1" href="#">PC</a></li>
-                <li><a tabindex="-1" href="#">PL</a></li>
-              </ul>
-            </li>
-            <li class="dropdown-submenu">
-                <a class="test" tabindex="-1" href="#">AN 2<span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                  <li><a tabindex="-1" href="#">IOCLA</a></li>
-                  <li><a  tabindex="-1" href="#">POO</a></li>
-                  
-                </ul>
-              </li>
-          </ul>
-        </div>
-      </div>
+
+    <div class="drop-down-button">
+        <select id="category-select">
+            <option value="USO">USO</option>
+            <option value="PC">PC</option>
+            <option value="SD">SD</option>
+          </select>
+    </div>
+    
 
     <button onclick="selectFile()" id="select-button">Select Image</button>
     <button onclick="uploadFile()" id="upload-button">Upload Image</button>

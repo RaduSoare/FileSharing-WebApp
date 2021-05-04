@@ -1,4 +1,12 @@
 
+var categoriesJSON;
+fetch('static/categories.json')
+            .then(response => response.json())
+            .then(obj => {
+                categoriesJSON = obj;
+            });
+
+            
 // Insert navbar
 $(document).ready(function(){
     $('#my-navbar').load("/navbar");
@@ -32,14 +40,31 @@ function selectFile() {
         reader.readAsDataURL(files[0]);
     }
     input.click();
+    
 }
 
 // Pune in storage fisierul
 function uploadFile() {
+    // Obtine numele cu care se va salva fisierul
     imgName = document.getElementById("namebox").value;
+
+    // Verifica daca a adaugat numele imaginii
+    if (!imgName) {
+        alert("Insert image name!");
+        return;
+    }
+
     
+    // Verifica daca a selectat o imagine
+    if (!files[0]) {
+        alert("Select image!");
+        return;
+    }
+     
+    // Uploadeaza fisierul in folderul userului curent
     var uploadTask = storage.ref("users_content/" + current_user.email.split(".")[0] + "/" + imgName + ".png").put(files[0]);
 
+    // Arata progresul uploadului
     uploadTask.on('state_changed', 
         function(snapshot){
             progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -55,13 +80,31 @@ function uploadFile() {
             uploadTask.snapshot.ref.getDownloadURL().then(function(url) {
                 imgUrl = url;
 
-                firebase.database().ref('content_files/' + current_user.email.split(".")[0] + '/' +imgName).set({
+                // Obtine categoria unde vrea sa fie afisat fisierul
+                var fileCategory = document.getElementById("category-select");
+                var subject = fileCategory.options[fileCategory.selectedIndex].value;
+
+                // Cauta categoria unde trebuie adaugat
+                var category;
+                for(var i=0;i<categoriesJSON.length;i++){
+                    if(categoriesJSON[i].subject == subject){
+                        category = categoriesJSON[i].category;
+                        console.log(category);
+                        break;
+                    }
+                }
+
+                firebase.database().ref('content_files/' + current_user.email.split(".")[0] + '/' +
+                                        category + '/' + 
+                                        subject + '/' + 
+                                        imgName).set({
                     Name:imgName,
                     Link:imgUrl
                 });
             alert("Image added successfully");
             }
         );
+        // Curata elementele pentru alt upload
         document.getElementById("namebox").value = "";
         document.getElementById('UpProgress').innerHTML = "";
 
@@ -84,6 +127,7 @@ function retrieveFile() {
 function removeFile() {
 
 }
+
 
 function signOut() {
     
