@@ -1,5 +1,6 @@
 
-function getAllCategoryFiles() {
+function getAllCategoryFiles(clicked_course) {
+
     var filesDiv = document.createElement('div');
     filesDiv.id = "file-div";
     document.body.appendChild(filesDiv);
@@ -8,10 +9,13 @@ function getAllCategoryFiles() {
     // Aici trebuie luat anul si materie din butonul apasat de user
     // Eu le voi hardcoda ca sa pot implementa functionalitatea
 
-    var userSubject = "Utilizarea Sistemelor de Operare";
+    var thisElem = document.getElementById(clicked_course);
+    var userSubject = thisElem.textContent;
+
     // categoria trebuie ori dedusa din subiect din .json ori cumva luat din tag-ul parinte al subiectului
-    var userCategory = "Anul 1";
-    
+
+    var userCategory = thisElem.parentElement.id;
+
     firebase.database().ref('content_files/').on('value', function(snapshot) {
         // Itereaza prin fiecare user
         snapshot.forEach(function(childNodes) {
