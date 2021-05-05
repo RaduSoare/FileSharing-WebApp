@@ -116,13 +116,16 @@ function retrieveFile() {
     imgName = document.getElementById('namebox').value;
     firebase.database().ref('content_files/'+imgName).on('value', function(snapshot) {
         if (snapshot.val() != null && snapshot.val().Link != null) {
-            document.getElementById('img').src = snapshot.val().Link;
+            //document.getElementById('img').src = snapshot.val().Link;
+            console.log(snapshot.val().Link);
+            console.log(snapshot.val().Name);
         } else {
             alert("Could not retrieve the file");
         }
         
     });
 }
+
 
 function removeFile() {
 

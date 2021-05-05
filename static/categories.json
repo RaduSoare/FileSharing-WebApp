@@ -1,14 +1,25 @@
 [
       {
-        "subject":"USO", 
-        "category":"AN 1"
+        "subject":"Utilizarea Sistemelor de Operare", 
+        "category":"Anul 1"
       },
       {
-        "subject":"PC", 
-        "category":"AN 1"
+        "subject":"Programarea Calculatoarelor", 
+        "category":"Anul 1"
       },
       
-      {"subject":"SD", 
-        "category":"AN 2"
+      {
+        "subject":"Structuri de date", 
+        "category":"Anul 1"
+      },
+
+      {
+        "subject":"IOCLA", 
+        "category":"Anul 2"
+      },
+
+      {
+        "subject":"Calculatoare Numerice 2", 
+        "category":"Anul 3"
       }
 ]

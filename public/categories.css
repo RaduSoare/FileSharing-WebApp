@@ -66,3 +66,9 @@ body {
     align-items: center;
     display: flex;
 }
+
+#file-div {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
