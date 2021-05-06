@@ -13,17 +13,14 @@ $(document).ready(function(){
 });
 
 var files = [];
-let current_user;
+var current_user;
 
 firebase.auth().onAuthStateChanged(user => {
     if (user) {
-      console.log("state = definitely signed in")
-      console.log(user.email);
       current_user = user;
 
     }
     else {
-      console.log("state = definitely signed out")
     }
   })
 
