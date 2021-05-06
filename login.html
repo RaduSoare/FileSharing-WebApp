@@ -7,9 +7,12 @@
     <meta name='viewport' content='width=device-width, initial-scale=1'>
 
     <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.3.2/firebase-auth.js"></script>
-    <script src="static/fireBase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-firestore.js"></script>
+    <script type="module" src="static/fireBase.js"></script>
     <script src="static/login.js"></script>
 
     <link href="/login.css" rel="stylesheet" type="text/css">
@@ -30,8 +33,9 @@
                 <div class="form__group">
                     <input class="form__input" type="email" placeholder="email" id="email"/>
                 </div>
-            
-            
+                <div class="form__group">
+                    <input class="form__input" type="text" placeholder="username" id="username"/>
+                </div>
                 <div class="form__group">
                     <input class="form__input" type="password" placeholder="password" id="password"/>
                 </div>

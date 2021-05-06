@@ -74,9 +74,13 @@ body {
 }
 
 #single-file-div {
-  border: solid white 3px;
+  border: solid rgb(255, 255, 255) 3px;
   padding: 10px;
   display: flex;
   align-items: center;
   flex-direction: column;
+}
+
+#subscribe-button {
+  color: #0c0f15;
 }

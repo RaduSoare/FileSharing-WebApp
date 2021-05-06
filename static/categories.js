@@ -1,3 +1,13 @@
+var current_user;
+
+firebase.auth().onAuthStateChanged(user => {
+    if (user) {
+      current_user = user;
+
+    }
+    else {
+    }
+  })
 
 function createGrid(nume_fisier, link_fisier, creator, descriere, rating) {
     var div_py = document.createElement('div');
@@ -110,9 +120,55 @@ function getAllCategoryFiles(clicked_course) {
                                 // singleFilesDiv.appendChild(publisherNameElem);
                                 // singleFilesDiv.appendChild(fileDescriptionElem);
                                 // singleFilesDiv.appendChild(ratingElem);
+                                var singleFilesDiv = document.createElement('div');
+                                singleFilesDiv.id = "single-file-div";
+                                
+                                // Creeaza elementul in care afisez numele fisierului ce duce la link
+                                var fileNameElem = document.createElement('a');
+                                var fileNameElemText = document.createTextNode(files[file].Name);
+                                fileNameElem.setAttribute('href', files[file].Link);
+                                fileNameElem.setAttribute('target', "_blank");
+                                fileNameElem.appendChild(fileNameElemText);
+                                
+
+                                var subscribeDiv = document.createElement('div');
+                                // Creeaza elementul in care afisez numele celui care a postat fisierul
+                                var publisherNameElem = document.createElement('a');
+                                var publisherNameElemText = document.createTextNode(files[file].Creator);
+                                publisherNameElem.appendChild(publisherNameElemText);
+                                
+                                var subscribeButton = document.createElement('button');
+                                subscribeButton.id = 'subscribe-button';
+                                subscribeButton.onclick = function(){subscribe(files[file].Creator)};
+                                
+                                var subscribeButtonText = document.createTextNode('Subscribe');
+                                subscribeButton.appendChild(subscribeButtonText);
+
+                                subscribeDiv.appendChild(publisherNameElem);
+                                
+                                subscribeDiv.appendChild(subscribeButton);
+
+                                // Creeaza elementul in care afisez descrierea fisierului
+                                var fileDescriptionElem = document.createElement('p');
+                                var fileDescriptionElemText = document.createTextNode(files[file].Description);
+                                fileDescriptionElem.appendChild(fileDescriptionElemText);
+
+                                // Creeaza elementul in care afisez rating-ul fisierului
+                                var ratingElem = document.createElement('p');
+                                var ratingElemText = document.createTextNode('Rating: ' + files[file].Rating + '/5');
+                                ratingElem.appendChild(ratingElemText);
+                                
+                                singleFilesDiv.appendChild(fileNameElem);
+                                //singleFilesDiv.appendChild(publisherNameElem);
+                                //singleFilesDiv.appendChild(subscribeButton);
+                                singleFilesDiv.appendChild(subscribeDiv);
+                                singleFilesDiv.appendChild(fileDescriptionElem);
+                                singleFilesDiv.appendChild(ratingElem);
+                                
+                                
 
                                 // filesDiv.appendChild(singleFilesDiv);
-                                createGrid(files[file].Name, files[file].Link, files[file].Creator, files[file].Description, files[file].Rating);
+                                // createGrid(files[file].Name, files[file].Link, files[file].Creator, files[file].Description, files[file].Rating);
                                 
                             }
                             // Nu are rost sa continue odata ce a gasit categoria
@@ -127,4 +183,46 @@ function getAllCategoryFiles(clicked_course) {
         });
     });
     
+}
+
+function subscribe(accountToSubscribe) {
+     console.log(current_user.email + " subscribed to " + accountToSubscribe);
+    
+    // firebase.database().ref('subscriptions/' + current_user.email.split(".")[0]).set({
+    //                 accountToSubscribe: ""
+    //             });
+
+    
+    
+
+    firebase.firestore().collection("users").doc(current_user.email).update({
+        Subscriptions: firebase.firestore.FieldValue.arrayUnion(accountToSubscribe)
+    }).then(() => {
+        console.log("Document successfully written!");
+    });
+    
+}
+
+function checkSubscription(accountToCheck) {
+    let rc = false;
+    var subscriptions = firebase.firestore().collection("users").doc(current_user.email);
+    subscriptions.get().then((doc) => {
+        if (doc.exists) {
+            if ((doc.data().Subscriptions).includes(accountToCheck)) {
+                console.log("already subscribed");
+                rc = true;
+                
+            } else {
+                console.log("not subscribed yet");
+                rc = false;
+                
+            }
+        } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+        }
+    }).catch((error) => {
+        console.log("Error getting document:", error);
+    });
+    console.log(rc);
 }
