@@ -9,65 +9,63 @@ firebase.auth().onAuthStateChanged(user => {
     }
   })
 
-function createGrid(nume_fisier, link_fisier, creator, descriere, rating) {
-    var div_py = document.createElement('div');
-    div_py.className = "py-5"
+function createGrid(filesDiv, nume_fisier, link_fisier, creator, descriere, rating) {
+    var singleFilesDiv = document.createElement('div');
+    singleFilesDiv.id = "single-file-div";
+    
+    // Creeaza elementul in care afisez numele fisierului ce duce la link
+    var fileNameElem = document.createElement('a');
+    var fileNameElemText = document.createTextNode(nume_fisier);
+    fileNameElem.setAttribute('href', link_fisier);
+    fileNameElem.setAttribute('target', "_blank");
+    fileNameElem.appendChild(fileNameElemText);
+    
 
-    var div_container = document.createElement('div');
-    div_container.className = "container";
-    div_py.appendChild(div_container);
+    var subscribeDiv = document.createElement('div');
+    // Creeaza elementul in care afisez numele celui care a postat fisierul
+    var publisherNameElem = document.createElement('a');
+    var publisherNameElemText = document.createTextNode(creator);
+    publisherNameElem.appendChild(publisherNameElemText);
+    
+    var subscribeButton = document.createElement('button');
+    subscribeButton.id = 'subscribe-button';
+    subscribeButton.onclick = function(){subscribe(creator)};
+    
+    var subscribeButtonText = document.createTextNode('Subscribe');
+    subscribeButton.appendChild(subscribeButtonText);
 
-    var div_row = document.createElement('div');
-    div_row.className = "row hidden-md-up";
-    div_py.appendChild(div_row);
+    subscribeDiv.appendChild(publisherNameElem);
+    
+    subscribeDiv.appendChild(subscribeButton);
 
-    var div_col = document.createElement('div');
-    div_col.className="col-md-4";
-    div_row.appendChild(div_col);
+    // Creeaza elementul in care afisez descrierea fisierului
+    var fileDescriptionElem = document.createElement('p');
+    var fileDescriptionElemText = document.createTextNode(descriere);
+    fileDescriptionElem.appendChild(fileDescriptionElemText);
 
-    var div_card = document.createElement('div');
-    div_card.className = "card";
-    div_col.appendChild(div_card);
+    // Creeaza elementul in care afisez rating-ul fisierului
+    var ratingElem = document.createElement('p');
+    var ratingElemText = document.createTextNode('Rating: ' + rating + '/5');
+    ratingElem.appendChild(ratingElemText);
+    
+    singleFilesDiv.appendChild(fileNameElem);
+    //singleFilesDiv.appendChild(publisherNameElem);
+    //singleFilesDiv.appendChild(subscribeButton);
+    singleFilesDiv.appendChild(subscribeDiv);
+    singleFilesDiv.appendChild(fileDescriptionElem);
+    singleFilesDiv.appendChild(ratingElem);
+    
+    
 
-    var div_card_block = document.createElement('div');
-    div_card_block.className = "card-block";
-    div_card.appendChild(div_card_block);
-
-
-
-    var nume = document.createElement('a');
-    nume.setAttribute('href', link_fisier); 
-    nume.setAttribute('target', "_blank"); 
-    nume.className = "card-link";
-    var text_nume = document.createTextNode(nume_fisier);
-    nume.appendChild(text_nume);
-    div_card_block.appendChild(nume);
-
-
-    var h_card_subtitle = document.createElement('h4');
-    h_card_subtitle.className = "card-subtitle text-muted";
-    var text1 = document.createTextNode(creator);
-    h_card_subtitle.appendChild(text1);
-    div_card_block.appendChild(h_card_subtitle);
-
-    var par = document.createElement('p');
-    par.className = "card-text p-y-1";
-    var text2 = document.createTextNode(descriere);
-    par.appendChild(text2);
-    div_card_block.appendChild(par);
-
-    var par = document.createElement('p');
-    par.className = "card-text p-y-1";
-    var text2 = document.createTextNode('Rating: ' + rating + '/5');
-    par.appendChild(text2);
-    div_card_block.appendChild(par);
-
-    document.body.appendChild(div_py);
-
+    filesDiv.appendChild(singleFilesDiv);    
 }
 
 function getAllCategoryFiles(clicked_course) {
 
+    // Arata doar fisierele din categoria selectata
+    if (document.getElementById("file-div") != null) {
+        document.getElementById("file-div").remove();
+    }
     // DIV care inglobeaza toate fisierele
     var filesDiv = document.createElement('div');
     filesDiv.id = "file-div";
@@ -95,81 +93,8 @@ function getAllCategoryFiles(clicked_course) {
                             // Itereaza prin fiecare fisier de la materia respectiva
                             var files = subjects[subject];
                             for (var file in files) {
-                                // var singleFilesDiv = document.createElement('div');
-                                // singleFilesDiv.id = "single-file-div";
-
-                                // var fileNameElem = document.createElement('a');
-                                // var fileNameElemText = document.createTextNode(files[file].Name);
-                                // fileNameElem.setAttribute('href', files[file].Link);
-                                // fileNameElem.setAttribute('target', "_blank");
-                                // fileNameElem.appendChild(fileNameElemText);
-
-                                // var publisherNameElem = document.createElement('a');
-                                // var publisherNameElemText = document.createTextNode(files[file].Creator);
-                                // publisherNameElem.appendChild(publisherNameElemText);
-
-                                // var fileDescriptionElem = document.createElement('p');
-                                // var fileDescriptionElemText = document.createTextNode(files[file].Description);
-                                // fileDescriptionElem.appendChild(fileDescriptionElemText);
-
-                                // var ratingElem = document.createElement('p');
-                                // var ratingElemText = document.createTextNode('Rating: ' + files[file].Rating + '/5');
-                                // ratingElem.appendChild(ratingElemText);
-                                
-                                // singleFilesDiv.appendChild(fileNameElem);
-                                // singleFilesDiv.appendChild(publisherNameElem);
-                                // singleFilesDiv.appendChild(fileDescriptionElem);
-                                // singleFilesDiv.appendChild(ratingElem);
-                                var singleFilesDiv = document.createElement('div');
-                                singleFilesDiv.id = "single-file-div";
-                                
-                                // Creeaza elementul in care afisez numele fisierului ce duce la link
-                                var fileNameElem = document.createElement('a');
-                                var fileNameElemText = document.createTextNode(files[file].Name);
-                                fileNameElem.setAttribute('href', files[file].Link);
-                                fileNameElem.setAttribute('target', "_blank");
-                                fileNameElem.appendChild(fileNameElemText);
-                                
-
-                                var subscribeDiv = document.createElement('div');
-                                // Creeaza elementul in care afisez numele celui care a postat fisierul
-                                var publisherNameElem = document.createElement('a');
-                                var publisherNameElemText = document.createTextNode(files[file].Creator);
-                                publisherNameElem.appendChild(publisherNameElemText);
-                                
-                                var subscribeButton = document.createElement('button');
-                                subscribeButton.id = 'subscribe-button';
-                                subscribeButton.onclick = function(){subscribe(files[file].Creator)};
-                                
-                                var subscribeButtonText = document.createTextNode('Subscribe');
-                                subscribeButton.appendChild(subscribeButtonText);
-
-                                subscribeDiv.appendChild(publisherNameElem);
-                                
-                                subscribeDiv.appendChild(subscribeButton);
-
-                                // Creeaza elementul in care afisez descrierea fisierului
-                                var fileDescriptionElem = document.createElement('p');
-                                var fileDescriptionElemText = document.createTextNode(files[file].Description);
-                                fileDescriptionElem.appendChild(fileDescriptionElemText);
-
-                                // Creeaza elementul in care afisez rating-ul fisierului
-                                var ratingElem = document.createElement('p');
-                                var ratingElemText = document.createTextNode('Rating: ' + files[file].Rating + '/5');
-                                ratingElem.appendChild(ratingElemText);
-                                
-                                singleFilesDiv.appendChild(fileNameElem);
-                                //singleFilesDiv.appendChild(publisherNameElem);
-                                //singleFilesDiv.appendChild(subscribeButton);
-                                singleFilesDiv.appendChild(subscribeDiv);
-                                singleFilesDiv.appendChild(fileDescriptionElem);
-                                singleFilesDiv.appendChild(ratingElem);
-                                
-                                
-
-                                // filesDiv.appendChild(singleFilesDiv);
-                                // createGrid(files[file].Name, files[file].Link, files[file].Creator, files[file].Description, files[file].Rating);
-                                
+                                createGrid(filesDiv, files[file].Name, files[file].Link, 
+                                    files[file].Creator, files[file].Description, files[file].Rating);                        
                             }
                             // Nu are rost sa continue odata ce a gasit categoria
                             break;
