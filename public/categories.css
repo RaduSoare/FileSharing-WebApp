@@ -72,3 +72,11 @@ body {
   align-items: center;
   flex-direction: column;
 }
+
+#single-file-div {
+  border: solid white 3px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}

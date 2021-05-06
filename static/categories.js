@@ -1,19 +1,17 @@
 
 function getAllCategoryFiles(clicked_course) {
 
+    // DIV care inglobeaza toate fisierele
     var filesDiv = document.createElement('div');
     filesDiv.id = "file-div";
     document.body.appendChild(filesDiv);
 
-    /* TODO */
-    // Aici trebuie luat anul si materie din butonul apasat de user
-    // Eu le voi hardcoda ca sa pot implementa functionalitatea
+
 
     var thisElem = document.getElementById(clicked_course);
+    // Obtine subiectul dorit de user
     var userSubject = thisElem.textContent;
-
-    // categoria trebuie ori dedusa din subiect din .json ori cumva luat din tag-ul parinte al subiectului
-
+    // Obtine categoria dorita de user
     var userCategory = thisElem.parentElement.id;
 
     firebase.database().ref('content_files/').on('value', function(snapshot) {
@@ -30,12 +28,33 @@ function getAllCategoryFiles(clicked_course) {
                             // Itereaza prin fiecare fisier de la materia respectiva
                             var files = subjects[subject];
                             for (var file in files) {
-                                var elementA = document.createElement('a');
-                                var elementAText = document.createTextNode(files[file].Name);
-                                elementA.setAttribute('href', files[file].Link);
-                                elementA.setAttribute('target', "_blank");
-                                elementA.appendChild(elementAText);
-                                filesDiv.appendChild(elementA);
+                                var singleFilesDiv = document.createElement('div');
+                                singleFilesDiv.id = "single-file-div";
+
+                                var fileNameElem = document.createElement('a');
+                                var fileNameElemText = document.createTextNode(files[file].Name);
+                                fileNameElem.setAttribute('href', files[file].Link);
+                                fileNameElem.setAttribute('target', "_blank");
+                                fileNameElem.appendChild(fileNameElemText);
+
+                                var publisherNameElem = document.createElement('a');
+                                var publisherNameElemText = document.createTextNode(files[file].Creator);
+                                publisherNameElem.appendChild(publisherNameElemText);
+
+                                var fileDescriptionElem = document.createElement('p');
+                                var fileDescriptionElemText = document.createTextNode(files[file].Description);
+                                fileDescriptionElem.appendChild(fileDescriptionElemText);
+
+                                var ratingElem = document.createElement('p');
+                                var ratingElemText = document.createTextNode('Rating: ' + files[file].Rating + '/5');
+                                ratingElem.appendChild(ratingElemText);
+                                
+                                singleFilesDiv.appendChild(fileNameElem);
+                                singleFilesDiv.appendChild(publisherNameElem);
+                                singleFilesDiv.appendChild(fileDescriptionElem);
+                                singleFilesDiv.appendChild(ratingElem);
+
+                                filesDiv.appendChild(singleFilesDiv);
                                 
                             }
                             // Nu are rost sa continue odata ce a gasit categoria

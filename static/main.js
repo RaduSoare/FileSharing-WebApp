@@ -60,6 +60,15 @@ function uploadFile() {
         alert("Select image!");
         return;
     }
+
+    var description = document.getElementById("file-description-textbox").value;
+    if (description=='') {
+        alert("Add description!");
+        return;
+    }
+    
+    
+
      
     // Uploadeaza fisierul in folderul userului curent
     var uploadTask = storage.ref("users_content/" + current_user.email.split(".")[0] + "/" + imgName + ".png").put(files[0]);
@@ -93,13 +102,17 @@ function uploadFile() {
                         break;
                     }
                 }
-
+                
                 firebase.database().ref('content_files/' + current_user.email.split(".")[0] + '/' +
                                         category + '/' + 
                                         subject + '/' + 
                                         imgName).set({
-                    Name:imgName,
-                    Link:imgUrl
+                    Name: imgName,
+                    Link: imgUrl,
+                    Creator: current_user.email,
+                    Rating: 0,
+                    Description: description
+
                 });
             alert("Image added successfully");
             }
@@ -107,6 +120,7 @@ function uploadFile() {
         // Curata elementele pentru alt upload
         document.getElementById("namebox").value = "";
         document.getElementById('UpProgress').innerHTML = "";
+        document.getElementById("file-description-textbox").value = '';
 
         
     });
