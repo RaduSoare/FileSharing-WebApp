@@ -1,8 +1,15 @@
+
 // '.tbl-content' consumed little space for vertical scrollbar, scrollbar width depend on browser/os/platfrom. Here calculate the scollbar width .
 $(window).on("load resize ", function() {
     var scrollWidth = $('.tbl-content').width() - $('.tbl-content table').width();
     $('.tbl-header').css({'padding-right':scrollWidth});
   }).resize();
+
+  // Populeaza grid-ul cand se incarca pagina de personal-content
+ $(window).on("load", populatePersonalContentGrid());
+ 
+
+ 
 
   // filename, postedBy, description, reviews, data
   function addSubscribedFile(filename, postedBy, description, reviews, data, link_download, link_review) {
@@ -32,6 +39,7 @@ $(window).on("load resize ", function() {
 
     var download_column = document.createElement('td');
     var download_column_a = document.createElement('a');
+    download_column_a.setAttribute('target', "_blank");
     var download_column_a_text = document.createTextNode("Download");
     download_column_a.setAttribute('href', link_download);
     download_column_a.appendChild(download_column_a_text);
@@ -52,4 +60,63 @@ $(window).on("load resize ", function() {
     tr.appendChild(download_column);
     tr.appendChild(add_review_column);
     tbody.appendChild(tr);
+  }
+
+  
+
+  function populatePersonalContentGrid() {
+  
+    // Obtine userul curent
+    firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+
+          // Obtine datele userului curent
+          var userRef = firebase.firestore().collection("users").doc(user.email);
+          userRef.get().then((doc) => {
+            if (doc.exists) {
+                // Obtine lista de useri la care userul curent e abonat
+                var subscriptionsList = doc.data().Subscriptions;
+                for (var account in subscriptionsList) {
+                  console.log(subscriptionsList[account].split(".")[0]);
+                  firebase.database().ref('content_files/' + subscriptionsList[account].split(".")[0] + '/').on('value', function(snapshot) {
+                    snapshot.forEach(function(childNodes) {
+                      var categories = childNodes.val();
+                      
+                      for (var category in categories) {
+                        var files = categories[category];
+                        for (var file in files) {
+                          addSubscribedFile(files[file].Name, files[file].Creator, files[file].Description, files[file].Rating,
+                               "TO DO", files[file].Link, "TO DO buton de add review");
+                        }
+                      }
+                      // for (var category in categories) {
+                      //   // Itereaza prin fiecare materie
+                      //   var subjects = categories[category];
+                      //   for (var subject in subjects) {
+                            
+                      //     // Itereaza prin fiecare fisier de la materia respectiva
+                      //     var files = subjects[subject];
+                      //     for (var file in files) {
+                      //         // createGrid(filesDiv, files[file].Name, files[file].Link, 
+                      //         //     files[file].Creator, files[file].Description, files[file].Rating);
+                      //         // addSubscribedFile(files[file].Name, files[file].Creator, files[file].Description, files[file].Rating,
+                      //         //   "TO DO", files[file].Link, "TO DO buton de add review")        
+                      //         console.log(files[file].Name);              
+                      //     }
+                      //   }
+                      // }
+                    });
+                  });
+                }
+            } else {
+                // doc.data() will be undefined in this case
+                console.log("No such document!");
+            }
+        }).catch((error) => {
+            console.log("Error getting document:", error);
+        });
+        }
+    });
+    
+    
   }
