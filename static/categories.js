@@ -27,16 +27,25 @@ function createGrid(filesDiv, nume_fisier, link_fisier, creator, descriere, rati
     var publisherNameElemText = document.createTextNode(creator);
     publisherNameElem.appendChild(publisherNameElemText);
     
-    var subscribeButton = document.createElement('button');
-    subscribeButton.id = 'subscribe-button';
-    subscribeButton.onclick = function(){subscribe(creator)};
-    
-    var subscribeButtonText = document.createTextNode('Subscribe');
-    subscribeButton.appendChild(subscribeButtonText);
+    // Verifica daca userul curent e deja abonat la creatorul postarii
+    checkSubscription(creator).then(function (rc){
+        if (!rc) {
+            var subscribeButton = document.createElement('button');
+            subscribeButton.id = 'subscribe-button';
+            subscribeButton.onclick = function(){subscribe(creator)};
+            
+            var subscribeButtonText = document.createTextNode('Subscribe');
+            subscribeButton.appendChild(subscribeButtonText);
 
-    subscribeDiv.appendChild(publisherNameElem);
+            subscribeDiv.appendChild(publisherNameElem);
+            
+            subscribeDiv.appendChild(subscribeButton);
+        } else {
+            subscribeDiv.appendChild(publisherNameElem);
+        }
+    });
+
     
-    subscribeDiv.appendChild(subscribeButton);
 
     // Creeaza elementul in care afisez descrierea fisierului
     var fileDescriptionElem = document.createElement('p');
@@ -49,8 +58,6 @@ function createGrid(filesDiv, nume_fisier, link_fisier, creator, descriere, rati
     ratingElem.appendChild(ratingElemText);
     
     singleFilesDiv.appendChild(fileNameElem);
-    //singleFilesDiv.appendChild(publisherNameElem);
-    //singleFilesDiv.appendChild(subscribeButton);
     singleFilesDiv.appendChild(subscribeDiv);
     singleFilesDiv.appendChild(fileDescriptionElem);
     singleFilesDiv.appendChild(ratingElem);
@@ -111,14 +118,7 @@ function getAllCategoryFiles(clicked_course) {
 }
 
 function subscribe(accountToSubscribe) {
-     console.log(current_user.email + " subscribed to " + accountToSubscribe);
-    
-    // firebase.database().ref('subscriptions/' + current_user.email.split(".")[0]).set({
-    //                 accountToSubscribe: ""
-    //             });
-
-    
-    
+     console.log(current_user.email + " subscribed to " + accountToSubscribe);    
 
     firebase.firestore().collection("users").doc(current_user.email).update({
         Subscriptions: firebase.firestore.FieldValue.arrayUnion(accountToSubscribe)
@@ -129,17 +129,17 @@ function subscribe(accountToSubscribe) {
 }
 
 function checkSubscription(accountToCheck) {
-    let rc = false;
+
     var subscriptions = firebase.firestore().collection("users").doc(current_user.email);
-    subscriptions.get().then((doc) => {
+    return subscriptions.get().then((doc) => {
         if (doc.exists) {
             if ((doc.data().Subscriptions).includes(accountToCheck)) {
-                console.log("already subscribed");
-                rc = true;
+               // console.log("already subscribed");
+               return true;
                 
             } else {
-                console.log("not subscribed yet");
-                rc = false;
+               // console.log("not subscribed yet");
+                return false;
                 
             }
         } else {
