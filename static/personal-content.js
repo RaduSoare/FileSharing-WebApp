@@ -5,11 +5,13 @@ $(window).on("load resize ", function() {
     $('.tbl-header').css({'padding-right':scrollWidth});
   }).resize();
 
+  console.log("Buna");
   // Populeaza grid-ul cand se incarca pagina de personal-content
  $(window).on("load", populatePersonalContentGrid());
  
 
  function computeRating(fileRated, creator, year, category) {
+   //console.log("AICI!!!");
     var rateSelected = document.getElementsByName('dropdown/'+fileRated);
    // console.log(year + " " + category);
     var fileRef = firebase.database().ref('content_files/' + creator.split(".")[0] + '/' +
@@ -23,11 +25,12 @@ $(window).on("load resize ", function() {
     
     // Updateaza valoarea in DB
     var new_rating = old_rating + Number(rateSelected[0].value);
-    fileRef.child(fileRated).update({'Rating': new_rating}); 
+    fileRef.child(fileRated).update({'Rating': new_rating});
+    //fileRef.child(fileRated).setValue({'Rating': new_rating});
 
     // Updateaza valoarea vizual in pagina
-    (rateSelected[0].parentElement.parentElement.parentElement).getElementsByTagName('td')[5].innerText = new_rating;
-
+    //(rateSelected[0].parentElement.parentElement.parentElement).getElementsByTagName('td')[5].innerText = new_rating;
+    location.reload();
     
 
  }
@@ -177,6 +180,41 @@ $(window).on("load resize ", function() {
     });
     
     
+  }
+
+  function sortTable(column_no) {
+    var table, rows, switching, i, x, y, shouldSwitch;
+    table = document.getElementById("myTable");
+    switching = true;
+    /* Make a loop that will continue until
+    no switching has been done: */
+    while (switching) {
+      // Start by saying: no switching is done:
+      switching = false;
+      rows = table.rows;
+      /* Loop through all table rows (except the
+      first, which contains table headers): */
+      for (i = 0; i < (rows.length - 1); i++) {
+        // Start by saying there should be no switching:
+        shouldSwitch = false;
+        /* Get the two elements you want to compare,
+        one from current row and one from the next: */
+        x = rows[i].getElementsByTagName("td")[column_no];
+        y = rows[i + 1].getElementsByTagName("td")[column_no];
+        // Check if the two rows should switch place:
+        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+          // If so, mark as a switch and break the loop:
+          shouldSwitch = true;
+          break;
+        }
+      }
+      if (shouldSwitch) {
+        /* If a switch has been marked, make the switch
+        and mark that a switch has been done: */
+        rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+        switching = true;
+      }
+    }
   }
 
   function getYearBySubject(subject) {
