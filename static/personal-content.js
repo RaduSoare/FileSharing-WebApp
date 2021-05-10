@@ -124,6 +124,15 @@ $(window).on("load resize ", function() {
     tbody.appendChild(tr);
   }
 
+  function getTodayDate() {
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); 
+    var yyyy = today.getFullYear();
+
+    today = mm + '/' + dd + '/' + yyyy;
+    return today;
+  }
   
 
   function populatePersonalContentGrid() {
@@ -145,13 +154,13 @@ $(window).on("load resize ", function() {
                       
                       var categories = childNodes.val();
                       var year = childNodes.key;
-                     
+                      
                       for (var category in categories) {
                         //console.log(category);
                         var files = categories[category];
                         for (var file in files) {
                           addSubscribedFile(year, category, files[file].Name, files[file].Creator, files[file].Description, files[file].Rating,
-                               "TO DO", files[file].Link, "TO DO buton de add review");
+                               getTodayDate(), files[file].Link, "TO DO buton de add review");
                         }
                       }
                     });
