@@ -9,7 +9,10 @@ $(window).on("load resize ", function() {
  $(window).on("load", populatePersonalContentGrid());
  
 
- 
+ function computeRating(fileRated, creator) {
+    var rateSelected = document.getElementsByName('dropdown/'+fileRated);
+    console.log(rateSelected[0].value);
+ }
 
   // filename, postedBy, description, reviews, data
   function addSubscribedFile(filename, postedBy, description, reviews, data, link_download, link_review) {
@@ -45,12 +48,43 @@ $(window).on("load resize ", function() {
     download_column_a.appendChild(download_column_a_text);
     download_column.appendChild(download_column_a);
 
-    var add_review_column = document.createElement('td');
-    var add_review_column_a = document.createElement('a');
-    var add_review_column_a_text = document.createTextNode("Add Review");
-    add_review_column_a.setAttribute('href', link_review);
-    add_review_column_a.appendChild(add_review_column_a_text);
-    add_review_column.appendChild(add_review_column_a);
+    // var add_review_column = document.createElement('td');
+    // var add_review_column_a = document.createElement('a');
+    // var add_review_column_a_text = document.createTextNode("Add Review");
+    // add_review_column_a.setAttribute('href', link_review);
+    // add_review_column_a.appendChild(add_review_column_a_text);
+    // add_review_column.appendChild(add_review_column_a);
+    var rating_dropdown_values = [0, 1, 2, 3, 4, 5];
+    var add_rating_column = document.createElement('td');
+    var rating_div = document.createElement('div');
+    rating_div.id = 'rating-div';
+
+    var add_rating_column_dropdown = document.createElement('select');
+    add_rating_column_dropdown.id = 'rating-dropdown';
+    add_rating_column_dropdown.name = 'dropdown/' + filename;
+    add_rating_column_dropdown.style.color = "black";
+    for (const val of rating_dropdown_values) {
+      var option = document.createElement("option");
+      option.value = val;
+      option.text = val;
+      add_rating_column_dropdown.appendChild(option);
+    }
+    
+    var add_rating_button = document.createElement('button');
+    add_rating_button.id = 'add-rating-button';
+    add_rating_button.name = 'button/' + filename;
+    add_rating_button.style.color = 'black';
+    add_rating_button.onclick = function (){computeRating(filename, postedBy)};
+    var add_rating_button_text = document.createTextNode('Add rating');
+    add_rating_button.appendChild(add_rating_button_text);
+
+    rating_div.appendChild(add_rating_column_dropdown);
+    rating_div.appendChild(add_rating_button);
+
+    add_rating_column.appendChild(rating_div);
+
+
+
 
     tr.appendChild(nume_fisier);
     tr.appendChild(nume_owner);
@@ -58,7 +92,8 @@ $(window).on("load resize ", function() {
     tr.appendChild(review_column);
     tr.appendChild(data_column);
     tr.appendChild(download_column);
-    tr.appendChild(add_review_column);
+    // tr.appendChild(add_review_column);
+    tr.appendChild(add_rating_column);
     tbody.appendChild(tr);
   }
 
@@ -80,6 +115,7 @@ $(window).on("load resize ", function() {
                   console.log(subscriptionsList[account].split(".")[0]);
                   firebase.database().ref('content_files/' + subscriptionsList[account].split(".")[0] + '/').on('value', function(snapshot) {
                     snapshot.forEach(function(childNodes) {
+                      
                       var categories = childNodes.val();
                       
                       for (var category in categories) {
@@ -89,22 +125,6 @@ $(window).on("load resize ", function() {
                                "TO DO", files[file].Link, "TO DO buton de add review");
                         }
                       }
-                      // for (var category in categories) {
-                      //   // Itereaza prin fiecare materie
-                      //   var subjects = categories[category];
-                      //   for (var subject in subjects) {
-                            
-                      //     // Itereaza prin fiecare fisier de la materia respectiva
-                      //     var files = subjects[subject];
-                      //     for (var file in files) {
-                      //         // createGrid(filesDiv, files[file].Name, files[file].Link, 
-                      //         //     files[file].Creator, files[file].Description, files[file].Rating);
-                      //         // addSubscribedFile(files[file].Name, files[file].Creator, files[file].Description, files[file].Rating,
-                      //         //   "TO DO", files[file].Link, "TO DO buton de add review")        
-                      //         console.log(files[file].Name);              
-                      //     }
-                      //   }
-                      // }
                     });
                   });
                 }
