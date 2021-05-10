@@ -32,6 +32,7 @@ function createGrid(filesDiv, nume_fisier, link_fisier, creator, descriere, rati
         if (!rc) {
             var subscribeButton = document.createElement('button');
             subscribeButton.id = 'subscribe-button';
+            
             subscribeButton.onclick = function(){subscribe(creator)};
             
             var subscribeButtonText = document.createTextNode('Subscribe');
@@ -56,11 +57,15 @@ function createGrid(filesDiv, nume_fisier, link_fisier, creator, descriere, rati
     var ratingElem = document.createElement('p');
     var ratingElemText = document.createTextNode('Rating: ' + rating + '/5');
     ratingElem.appendChild(ratingElemText);
-    
+    var img = document.createElement('img');
+    img.src = 'https://i.ibb.co/JCgv0Dd/file.png';
+    img.style.width = '60px';
+    img.style.height = 'auto';
+    singleFilesDiv.appendChild(img);
     singleFilesDiv.appendChild(fileNameElem);
-    singleFilesDiv.appendChild(subscribeDiv);
     singleFilesDiv.appendChild(fileDescriptionElem);
     singleFilesDiv.appendChild(ratingElem);
+    singleFilesDiv.appendChild(subscribeDiv);
     
     
 
