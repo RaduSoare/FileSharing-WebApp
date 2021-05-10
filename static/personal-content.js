@@ -15,7 +15,7 @@ $(window).on("load resize ", function() {
  }
 
   // filename, postedBy, description, reviews, data
-  function addSubscribedFile(category_name, filename, postedBy, description, reviews, data, link_download, link_review) {
+  function addSubscribedFile(year, category_name, filename, postedBy, description, reviews, data, link_download, link_review) {
 
     var tbody = document.getElementById('cells');
 
@@ -23,6 +23,10 @@ $(window).on("load resize ", function() {
     var nume_fisier = document.createElement('td');
     var nume_fisier_text = document.createTextNode(filename);
     nume_fisier.appendChild(nume_fisier_text);
+
+    var year_column = document.createElement('td');
+    var year_column_text = document.createTextNode(year);
+    year_column.appendChild(year_column_text);
 
     var category_column = document.createElement('td');
     var category_column_text = document.createTextNode(category_name);
@@ -88,7 +92,7 @@ $(window).on("load resize ", function() {
     add_rating_column.appendChild(rating_div);
 
 
-
+    tr.appendChild(year_column);
     tr.appendChild(category_column);
     tr.appendChild(nume_fisier);
     tr.appendChild(nume_owner);
@@ -125,7 +129,8 @@ $(window).on("load resize ", function() {
                       for (var category in categories) {
                         var files = categories[category];
                         for (var file in files) {
-                          addSubscribedFile(category, files[file].Name, files[file].Creator, files[file].Description, files[file].Rating,
+                          var year = getYearBySubject(category);
+                          addSubscribedFile(year, category, files[file].Name, files[file].Creator, files[file].Description, files[file].Rating,
                                "TO DO", files[file].Link, "TO DO buton de add review");
                         }
                       }
@@ -143,4 +148,17 @@ $(window).on("load resize ", function() {
     });
     
     
+  }
+
+  function getYearBySubject(subject) {
+    switch(subject) {
+      case "Utilizarea Sistemelor de Operare":
+        return "Anul 1";
+      case "Programarea Calculatoarelor":
+        return "Anul 1";
+      case "IOCLA":
+        return "Anul 2";
+      case "Calculatoare Numerice 2":
+        return "Anul 3";     
+    }
   }
