@@ -9,9 +9,27 @@ $(window).on("load resize ", function() {
  $(window).on("load", populatePersonalContentGrid());
  
 
- function computeRating(fileRated, creator) {
+ function computeRating(fileRated, creator, year, category) {
     var rateSelected = document.getElementsByName('dropdown/'+fileRated);
-    console.log(rateSelected[0].value);
+   // console.log(year + " " + category);
+    var fileRef = firebase.database().ref('content_files/' + creator.split(".")[0] + '/' +
+                                          year + '/' + category + '/');
+
+    var old_rating;
+    // Obtine vechea valoare din Rating
+    fileRef.child(fileRated).once('value', (snapshot) => {
+      old_rating = snapshot.val().Rating;
+    });
+    
+    // Updateaza valoarea in DB
+    var new_rating = old_rating + Number(rateSelected[0].value);
+    fileRef.child(fileRated).update({'Rating': new_rating}); 
+
+    // Updateaza valoarea vizual in pagina
+    (rateSelected[0].parentElement.parentElement.parentElement).getElementsByTagName('td')[5].innerText = new_rating;
+
+    
+
  }
 
   // filename, postedBy, description, reviews, data
@@ -40,9 +58,10 @@ $(window).on("load resize ", function() {
     var description_column_text = document.createTextNode(description);
     description_column.appendChild(description_column_text);
 
-    var review_column = document.createElement('td');
-    var review_column_text = document.createTextNode(reviews);
-    review_column.appendChild(review_column_text);
+    var rating_column = document.createElement('td');
+    rating_column.id = 'rating-column';
+    var rating_column_text = document.createTextNode(reviews);
+    rating_column.appendChild(rating_column_text);
 
     var data_column = document.createElement('td');
     var data_column_text = document.createTextNode(data);
@@ -56,12 +75,12 @@ $(window).on("load resize ", function() {
     download_column_a.appendChild(download_column_a_text);
     download_column.appendChild(download_column_a);
 
-    // var add_review_column = document.createElement('td');
-    // var add_review_column_a = document.createElement('a');
-    // var add_review_column_a_text = document.createTextNode("Add Review");
-    // add_review_column_a.setAttribute('href', link_review);
-    // add_review_column_a.appendChild(add_review_column_a_text);
-    // add_review_column.appendChild(add_review_column_a);
+    // var add_rating_column = document.createElement('td');
+    // var add_rating_column_a = document.createElement('a');
+    // var add_rating_column_a_text = document.createTextNode("Add Review");
+    // add_rating_column_a.setAttribute('href', link_review);
+    // add_rating_column_a.appendChild(add_rating_column_a_text);
+    // add_rating_column.appendChild(add_rating_column_a);
     var rating_dropdown_values = [0, 1, 2, 3, 4, 5];
     var add_rating_column = document.createElement('td');
     var rating_div = document.createElement('div');
@@ -82,7 +101,7 @@ $(window).on("load resize ", function() {
     add_rating_button.id = 'add-rating-button';
     add_rating_button.name = 'button/' + filename;
     add_rating_button.style.color = 'black';
-    add_rating_button.onclick = function (){computeRating(filename, postedBy)};
+    add_rating_button.onclick = function (){computeRating(filename, postedBy, year, category_name)};
     var add_rating_button_text = document.createTextNode('Add rating');
     add_rating_button.appendChild(add_rating_button_text);
 
@@ -97,10 +116,10 @@ $(window).on("load resize ", function() {
     tr.appendChild(nume_fisier);
     tr.appendChild(nume_owner);
     tr.appendChild(description_column);
-    tr.appendChild(review_column);
+    tr.appendChild(rating_column);
     tr.appendChild(data_column);
     tr.appendChild(download_column);
-    // tr.appendChild(add_review_column);
+    // tr.appendChild(add_rating_column);
     tr.appendChild(add_rating_column);
     tbody.appendChild(tr);
   }
@@ -125,11 +144,12 @@ $(window).on("load resize ", function() {
                     snapshot.forEach(function(childNodes) {
                       
                       var categories = childNodes.val();
-                      
+                      var year = childNodes.key;
+                     
                       for (var category in categories) {
+                        //console.log(category);
                         var files = categories[category];
                         for (var file in files) {
-                          var year = getYearBySubject(category);
                           addSubscribedFile(year, category, files[file].Name, files[file].Creator, files[file].Description, files[file].Rating,
                                "TO DO", files[file].Link, "TO DO buton de add review");
                         }
