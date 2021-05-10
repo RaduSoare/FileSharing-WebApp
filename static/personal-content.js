@@ -15,7 +15,7 @@ $(window).on("load resize ", function() {
  }
 
   // filename, postedBy, description, reviews, data
-  function addSubscribedFile(filename, postedBy, description, reviews, data, link_download, link_review) {
+  function addSubscribedFile(category_name, filename, postedBy, description, reviews, data, link_download, link_review) {
 
     var tbody = document.getElementById('cells');
 
@@ -23,6 +23,10 @@ $(window).on("load resize ", function() {
     var nume_fisier = document.createElement('td');
     var nume_fisier_text = document.createTextNode(filename);
     nume_fisier.appendChild(nume_fisier_text);
+
+    var category_column = document.createElement('td');
+    var category_column_text = document.createTextNode(category_name);
+    category_column.appendChild(category_column_text);
 
     var nume_owner = document.createElement('td');
     var nume_owner_text = document.createTextNode(postedBy);
@@ -85,7 +89,7 @@ $(window).on("load resize ", function() {
 
 
 
-
+    tr.appendChild(category_column);
     tr.appendChild(nume_fisier);
     tr.appendChild(nume_owner);
     tr.appendChild(description_column);
@@ -121,7 +125,7 @@ $(window).on("load resize ", function() {
                       for (var category in categories) {
                         var files = categories[category];
                         for (var file in files) {
-                          addSubscribedFile(files[file].Name, files[file].Creator, files[file].Description, files[file].Rating,
+                          addSubscribedFile(category, files[file].Name, files[file].Creator, files[file].Description, files[file].Rating,
                                "TO DO", files[file].Link, "TO DO buton de add review");
                         }
                       }
