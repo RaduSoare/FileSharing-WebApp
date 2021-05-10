@@ -4,12 +4,12 @@
 		var password = document.getElementById("password");
 		var username = document.getElementById("username");
 
-		if (email.value == '' || username.value =='' || username.value =='') {
+		if (email.value == '' || username.value == '' || password.value == '') {
 			alert('Form not completed!');
 			return;
 		}
 
-		const promise = auth.createUserWithEmailAndPassword(email.value, password.value);
+		const promise = firebase.auth().createUserWithEmailAndPassword(email.value, password.value);
 		promise.catch(e=> {
 			alert(e.message);
 			return;
