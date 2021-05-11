@@ -5,7 +5,6 @@ $(window).on("load resize ", function() {
     $('.tbl-header').css({'padding-right':scrollWidth});
   }).resize();
 
-  console.log("Buna");
   // Populeaza grid-ul cand se incarca pagina de personal-content
  $(window).on("load", populatePersonalContentGrid());
  
@@ -29,15 +28,27 @@ $(window).on("load resize ", function() {
     var new_rating = old_rating + Number(rateSelected[0].value);
     fileRef.child(fileRated).update({'Rating': new_rating});
     fileRef.child(fileRated).update({'RatingCount': old_count + 1});
-    
-    
 
-    // Updateaza valoarea vizual in pagina
-    //(rateSelected[0].parentElement.parentElement.parentElement).getElementsByTagName('td')[5].innerText = new_rating;
+    
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        var imgRef = firebase.database().ref('content_files/' + creator.split(".")[0] + '/' +
+                                        year + '/' + category + '/' + fileRated + '/');
+        imgRef.child('Reviewers').update({[user.email.split(".")[0]] : 0});
+        imgRef.off();
+      }
+    });
+    
+    
+    
+    // Refresh la pagina pentru a se vedea modificarea
     location.reload();
     
 
  }
+
+
+
 
   // filename, postedBy, description, reviews, data
   function addSubscribedFile(year, category_name, filename, postedBy, description, rating, rating_count, data, link_download, link_review) {
@@ -83,12 +94,25 @@ $(window).on("load resize ", function() {
     download_column_a.appendChild(download_column_a_text);
     download_column.appendChild(download_column_a);
 
-    // var add_rating_column = document.createElement('td');
-    // var add_rating_column_a = document.createElement('a');
-    // var add_rating_column_a_text = document.createTextNode("Add Review");
-    // add_rating_column_a.setAttribute('href', link_review);
-    // add_rating_column_a.appendChild(add_rating_column_a_text);
-    // add_rating_column.appendChild(add_rating_column_a);
+
+    firebase.auth().onAuthStateChanged(user => {
+      if (user) {
+        var imgRef = firebase.database().ref('content_files/' + postedBy.split(".")[0] + '/' 
+                                        + year + '/' + category_name + '/' + filename + '/' + 'Reviewers' + '/' 
+                                        + user.email.split(".")[0]);
+        imgRef.once('value', snapshot => {
+          if (snapshot.exists()) {
+            //console.log(filename + 'already rated');
+            document.getElementsByName('dropdown/' + filename)[0].setAttribute('disabled', 'true');
+            document.getElementsByName('button/' + filename)[0].setAttribute('disabled', 'true');
+          } else {
+            //console.log(filename + 'not rated');
+          }
+        });
+        imgRef.off();
+      }
+    });
+
     var rating_dropdown_values = [0, 1, 2, 3, 4, 5];
     var add_rating_column = document.createElement('td');
     var rating_div = document.createElement('div');
@@ -180,7 +204,7 @@ $(window).on("load resize ", function() {
             }
         }).catch((error) => {
             console.log("Error getting document:", error);
-        });
+          });
         }
     });
     
@@ -222,15 +246,4 @@ $(window).on("load resize ", function() {
     }
   }
 
-  function getYearBySubject(subject) {
-    switch(subject) {
-      case "Utilizarea Sistemelor de Operare":
-        return "Anul 1";
-      case "Programarea Calculatoarelor":
-        return "Anul 1";
-      case "IOCLA":
-        return "Anul 2";
-      case "Calculatoare Numerice 2":
-        return "Anul 3";     
-    }
-  }
+
