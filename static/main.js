@@ -108,6 +108,7 @@ function uploadFile() {
                     Link: imgUrl,
                     Creator: current_user.email,
                     Rating: 0,
+                    RatingCount: 0,
                     Description: description
 
                 });

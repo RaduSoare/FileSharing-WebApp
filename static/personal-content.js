@@ -18,15 +18,19 @@ $(window).on("load resize ", function() {
                                           year + '/' + category + '/');
 
     var old_rating;
+    var old_count;
     // Obtine vechea valoare din Rating
     fileRef.child(fileRated).once('value', (snapshot) => {
       old_rating = snapshot.val().Rating;
+      old_count = snapshot.val().RatingCount;
     });
     
     // Updateaza valoarea in DB
     var new_rating = old_rating + Number(rateSelected[0].value);
     fileRef.child(fileRated).update({'Rating': new_rating});
-    //fileRef.child(fileRated).setValue({'Rating': new_rating});
+    fileRef.child(fileRated).update({'RatingCount': old_count + 1});
+    
+    
 
     // Updateaza valoarea vizual in pagina
     //(rateSelected[0].parentElement.parentElement.parentElement).getElementsByTagName('td')[5].innerText = new_rating;
@@ -36,7 +40,7 @@ $(window).on("load resize ", function() {
  }
 
   // filename, postedBy, description, reviews, data
-  function addSubscribedFile(year, category_name, filename, postedBy, description, reviews, data, link_download, link_review) {
+  function addSubscribedFile(year, category_name, filename, postedBy, description, rating, rating_count, data, link_download, link_review) {
 
     var tbody = document.getElementById('cells');
 
@@ -63,7 +67,8 @@ $(window).on("load resize ", function() {
 
     var rating_column = document.createElement('td');
     rating_column.id = 'rating-column';
-    var rating_column_text = document.createTextNode(reviews);
+    var score = rating_count == 0 ? rating : rating/rating_count;
+    var rating_column_text = document.createTextNode(score.toFixed(2));
     rating_column.appendChild(rating_column_text);
 
     var data_column = document.createElement('td');
@@ -163,7 +168,7 @@ $(window).on("load resize ", function() {
                         var files = categories[category];
                         for (var file in files) {
                           addSubscribedFile(year, category, files[file].Name, files[file].Creator, files[file].Description, files[file].Rating,
-                               getTodayDate(), files[file].Link, "TO DO buton de add review");
+                              files[file].RatingCount, getTodayDate(), files[file].Link, "TO DO buton de add review");
                         }
                       }
                     });
