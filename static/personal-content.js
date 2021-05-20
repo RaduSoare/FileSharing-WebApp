@@ -10,7 +10,6 @@ $(window).on("load resize ", function() {
  
 
  function computeRating(fileRated, creator, year, category) {
-   //console.log("AICI!!!");
     var rateSelected = document.getElementsByName('dropdown/'+fileRated);
    // console.log(year + " " + category);
     var fileRef = firebase.database().ref('content_files/' + creator.split(".")[0] + '/' +
@@ -209,6 +208,13 @@ $(window).on("load resize ", function() {
     });
     
     
+  }
+
+  function sort() {
+    var columns = document.getElementById("columns");
+    var columnNo = columns.value;
+    column_no = parseInt(columnNo);
+    sortTable(column_no);
   }
 
   function sortTable(column_no) {
