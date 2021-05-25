@@ -73,9 +73,11 @@
   </nav>
 
 <div id="select-file-form">
-    Image Name <input id="namebox" type="text"> <br>
-    <img id="img"> <label id="UpProgress"></label> <br>
-    <label for="file-description-textbox">Add description: </label>
+    <label for="namebox">Image Name: </label> <br>
+    <textarea id="namebox" name="namebox" rows="1" cols="30"></textarea> <br>
+    <!-- Image Name: <br> <input id="namebox" type="text" >  -->
+   
+    <label for="file-description-textbox">Add description: </label> <br>
     <textarea id="file-description-textbox" name="file-description-textbox" rows="3" cols="30"></textarea>
 
     <!-- DropDown category -->
@@ -87,14 +89,15 @@
             <option value="Calculatoare Numerice 2">Calculatoare Numerice 2</option>
           </select>
     </div>
-    
-
     <button onclick="selectFile()" id="select-button">Select Image</button>
     <button onclick="uploadFile()" id="upload-button">Upload Image</button>
+    <img id="img"> <br> <label id="UpProgress"></label> <br>
 </div>
 
 <div id="remove-file-form">
-    Image Name <input id="remove-namebox" type="text"> <br>
+    <label for="namebox">Image Name: </label> <br>
+    <textarea id="namebox" name="namebox" rows="1" cols="30"></textarea> <br>
+    <!-- Image Name: <br> <input id="remove-namebox" type="text"> <br> -->
     <button onclick="removeFile()" id="remove-button">Remove Image</button>
 </div>
 

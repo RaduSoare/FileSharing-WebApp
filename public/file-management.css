@@ -12,6 +12,7 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
     }
 
     #remove-file-form {
+        margin-top: -267px;
         margin-left: 300px;
         visibility: hidden;
     }
@@ -21,12 +22,15 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
         visibility: hidden;
     }
     #select-button {
+        padding: 2px 12px;
         color: black;
     }
     #upload-button {
+        padding: 2px 12px;
         color: black;
     }
     #remove-button {
+        margin-top: 5px;
         color: black;
     }
     #namebox {
@@ -38,6 +42,8 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
     /* DropDown button */
     
     .drop-down-button{
+        margin-top: 13px;
+        margin-bottom: 13px;
         color: black;
     }
 
@@ -66,5 +72,8 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
       }
     
     #remove-file-button {
-       color: black; 
+        margin-top: 20px;
+        color: black; 
     }
+
+    
