@@ -3,6 +3,8 @@ const path = require('path');
 
 const app = express();
 
+const port = process.env.PORT || 5000
+
 app.use("/static", express.static('./static/'));
 
 app.use(express.static(__dirname + '/public'));
