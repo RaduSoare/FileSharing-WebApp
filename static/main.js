@@ -70,9 +70,19 @@ function uploadFile() {
     // Uploadeaza fisierul in folderul userului curent
     var uploadTask = storage.ref("users_content/" + current_user.email.split(".")[0] + "/" + imgName + ".png").put(files[0]);
 
+
     // Arata progresul uploadului
     uploadTask.on('state_changed', 
         function(snapshot){
+            console.log(snapshot.totalBytes);
+            if (snapshot.totalBytes > 5000000) {
+                alert('The file exceeds 5MB');
+                document.getElementById("namebox").value = "";
+                document.getElementById('UpProgress').innerHTML = "";
+                document.getElementById("file-description-textbox").value = '';
+                uploadTask.cancel();
+            }
+            
             progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
             document.getElementById('UpProgress').innerHTML = 'Upload' + progress + "%";
         },
