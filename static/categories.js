@@ -133,7 +133,7 @@ function subscribe(accountToSubscribe, subject) {
     firebase.firestore().collection("users").doc(current_user.email).update({
         Subscriptions: firebase.firestore.FieldValue.arrayUnion(accountToSubscribe)
     }).then(() => {
-        //console.log("Document successfully written!");
+        console.log("Document successfully written!");
         var dropDownElem = document.getElementById(subject);
         dropDownElem.click();
     });
