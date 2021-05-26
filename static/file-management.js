@@ -5,7 +5,10 @@ function showUploadSection() {
     var myFilesSection = document.getElementById("my-files-section");
     
     myFilesSection.style.visibility = "hidden";
-    selectFileForm.style.visibility = "visible";
+    // Delay pentru a nu se intercala cu sectiunea de upload
+    setTimeout(() => {  selectFileForm.style.visibility = "visible"; }, 300);
+    
+    
     
 }
 
@@ -45,6 +48,9 @@ function removeFile(year, category,creator, filename) {
     }).catch((error) => {
         // an error occurred!
     });
+
+    // Reapeleaza functia pentru a uploada fisierele curente (nu se mai dubleaza)
+    showMyFilesSection();
 }
 
 function showFile(year, category, filename, creator, link) {
@@ -79,7 +85,8 @@ function showMyFilesSection() {
 
     var myFilesSection = document.getElementById("my-files-section");
     selectFileForm.style.visibility = "hidden";
-
+    // Hack ca sa curete sectiunea vechie de my file, inainte sa creeze una noua
+    myFilesSection.innerHTML = "";
     myFilesSection.style.visibility = "visible";
     
     var userRef = firebase.database().ref('content_files/'+ current_user.email.split(".")[0] + '/');

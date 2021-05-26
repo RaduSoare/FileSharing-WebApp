@@ -54,7 +54,6 @@
 </head>
 <body class="w3-black">
     <div id="my-navbar"></div>
-
     <!-- Icon Bar (Sidebar - hidden on small screens) -->
     <nav  id="file-management-navbar" class="w3-sidebar w3-bar-block w3-small w3-hide-small w3-center">
     
@@ -69,8 +68,8 @@
     </a>
   </nav>
 
-<div id="select-file-form">
-    <label for="namebox">Image Name: </label> <br>
+<div id="select-file-form" style="position:absolute">
+    <label for="namebox">File Name: </label> <br>
     <textarea id="namebox" name="namebox" rows="1" cols="30"></textarea> <br>
     <!-- Image Name: <br> <input id="namebox" type="text" >  -->
    
@@ -86,13 +85,13 @@
             <option value="Calculatoare Numerice 2">Calculatoare Numerice 2</option>
           </select>
     </div>
-    <button onclick="selectFile()" id="select-button">Select Image</button>
-    <button onclick="uploadFile()" id="upload-button">Upload Image</button>
+    <button onclick="selectFile()" id="select-button">Select File</button>
+    <button onclick="uploadFile()" id="upload-button">Upload File</button>
     <img id="img"> <br> <label id="UpProgress"></label> <br>
 </div>
 
 <!-- Sectiune unde vor aparea fisierele userului -->
-<div id="my-files-section">
+<div id="my-files-section" style="position:absolute">
 
 </div>
 
