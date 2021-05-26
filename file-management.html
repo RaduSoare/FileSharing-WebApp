@@ -62,10 +62,7 @@
       <i class="fa fa-plus w3-xxlarge"></i>
       <p> Add file</p>
     </a>
-    <a onclick="showRemoveSection()" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
-      <i class="fa fa-trash w3-xxlarge"></i>
-      <p>Remove file</p>
-    </a>
+
     <a id="show-my-files-navbar-item" onclick="showMyFilesSection()" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
       <i class="fa fa-list w3-xxlarge"></i>
       <p>Show my files</p>
@@ -78,7 +75,7 @@
     <!-- Image Name: <br> <input id="namebox" type="text" >  -->
    
     <label for="file-description-textbox">Add description: </label> <br>
-    <textarea id="file-description-textbox" name="file-description-textbox" rows="3" cols="30"></textarea>
+    <textarea id="file-description-textbox" name="file-description-textbox" rows="3" cols="30" maxlength="30"></textarea>
 
     <!-- DropDown category -->
     <div class="drop-down-button">
@@ -94,13 +91,7 @@
     <img id="img"> <br> <label id="UpProgress"></label> <br>
 </div>
 
-<div id="remove-file-form">
-    <label for="namebox">Image Name: </label> <br>
-    <textarea id="namebox" name="namebox" rows="1" cols="30"></textarea> <br>
-    <!-- Image Name: <br> <input id="remove-namebox" type="text"> <br> -->
-    <button onclick="removeFile()" id="remove-button">Remove Image</button>
-</div>
-
+<!-- Sectiune unde vor aparea fisierele userului -->
 <div id="my-files-section">
 
 </div>

@@ -1,22 +1,22 @@
 
 function showUploadSection() {
     var selectFileForm = document.getElementById("select-file-form");
-    var removeFileForm = document.getElementById("remove-file-form");
+    
     var myFilesSection = document.getElementById("my-files-section");
-    removeFileForm.style.visibility = "hidden";
+    
     myFilesSection.style.visibility = "hidden";
     selectFileForm.style.visibility = "visible";
     
 }
 
-function showRemoveSection() {
-    var selectFileForm = document.getElementById("select-file-form");
-    var removeFileForm = document.getElementById("remove-file-form");
-    var myFilesSection = document.getElementById("my-files-section");
-    selectFileForm.style.visibility = "hidden";
-    myFilesSection.style.visibility = "hidden";
-    removeFileForm.style.visibility = "visible";
-}
+// function showRemoveSection() {
+//     var selectFileForm = document.getElementById("select-file-form");
+//     var removeFileForm = document.getElementById("remove-file-form");
+//     var myFilesSection = document.getElementById("my-files-section");
+//     selectFileForm.style.visibility = "hidden";
+//     myFilesSection.style.visibility = "hidden";
+//     removeFileForm.style.visibility = "visible";
+// }
 var current_user;
 firebase.auth().onAuthStateChanged(user => {
     if (user) {
@@ -76,10 +76,10 @@ function showFile(year, category, filename, creator, link) {
 
 function showMyFilesSection() {
     var selectFileForm = document.getElementById("select-file-form");
-    var removeFileForm = document.getElementById("remove-file-form");
+
     var myFilesSection = document.getElementById("my-files-section");
     selectFileForm.style.visibility = "hidden";
-    removeFileForm.style.visibility = "hidden";
+
     myFilesSection.style.visibility = "visible";
     
     var userRef = firebase.database().ref('content_files/'+ current_user.email.split(".")[0] + '/');

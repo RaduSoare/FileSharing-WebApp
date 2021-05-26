@@ -68,7 +68,7 @@ $(window).on("load resize ", function() {
     category_column.appendChild(category_column_text);
 
     var nume_owner = document.createElement('td');
-    var nume_owner_text = document.createTextNode(postedBy);
+    var nume_owner_text = document.createTextNode(postedBy.split("@")[0]);
     nume_owner.appendChild(nume_owner_text);
 
     var description_column = document.createElement('td');
